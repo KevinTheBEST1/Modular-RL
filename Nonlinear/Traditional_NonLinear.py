@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Apr 12 16:37:09 2023
-
-@author: Kevin
-"""
-
 import os
 os.chdir(os.getcwd())
 import numpy as np

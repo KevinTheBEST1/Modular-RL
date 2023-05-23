@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Apr 25 08:40:55 2023
-
-@author: Kevin
-"""
-#4th run
 
 import gym
 from gym.envs.toy_text.frozen_lake import generate_random_map

@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Apr 25 09:24:39 2023
-
-@author: Kevin
-"""
-
-
 import os
 import numpy as np
 from pulp import *

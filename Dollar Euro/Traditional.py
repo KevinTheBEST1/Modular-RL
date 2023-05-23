@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Mar  9 08:58:28 2023
 
-@author: Kevin
-"""
 import os
 os.chdir(os.getcwd())
 import numpy as np
