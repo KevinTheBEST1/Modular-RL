@@ -109,15 +109,3 @@ for run in range(n_runs):
         delta = np.max(np.abs(Q - np.max(Q)))
         if delta < 0.001:
             break
-
-# Print the optimal policy
-policy = np.argmax(Q, axis=1)
-#print(policy)
-import pandas as pd
-pd.DataFrame(rewards).to_csv("traditional_expfinal.csv")
-'''
-w=10
-plt.plot(r_list[:-w], alpha=0.3, color='orange')
-r_list2= np.convolve(r_list, np.ones(w), 'valid') / w
-plt.plot(rewards[0],color='orange')
-'''

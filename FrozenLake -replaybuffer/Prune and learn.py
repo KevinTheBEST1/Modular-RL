@@ -209,14 +209,4 @@ for run in range(n_runs):
         if egreedy > egreedy_final:
             egreedy -= egreedy*egreedy_decay
         stepPerEp.append(step)
-    # print("Percent of episodes finished successfully: {0}".format(sum(rewards_total)/num_episodes))
-    # print("Percent of episodes finished successfully (last 100 episodes): {0}".format(sum(rewards_total[-100:])/100))
     
-    # print("Average number of steps: %.2f" % (sum(steps_total)/num_episodes))
-    # print("Average number of steps (last 100 episodes): %.2f" % (sum(steps_total[-100:])/100))
-
-w=100
-new=np.convolve(np.mean(r_list,axis=0), np.ones(w), 'valid') / w
-plt.plot(new)
-
-pd.DataFrame(r_list).to_csv("pruned.csv")

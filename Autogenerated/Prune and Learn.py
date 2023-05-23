@@ -243,23 +243,5 @@ for run in range(n_runs):
         # if delta < 0.000001:
         #     break
 
-# Print the optimal policy
-policy = np.argmax(Q, axis=1)
-#print(policy)
-import pandas as pd
-pd.DataFrame(rewards).to_csv("pruned.csv")
-'''
-w=10
-plt.plot(r_list[:-w], alpha=0.3, color='orange')
-r_list2= np.convolve(r_list, np.ones(w), 'valid') / w
-plt.plot(r_list2,color='orange')
-'''
-state=0
-rsum=[]
-while state!=terminal_state:
-    action=np.argmax(Q[state, :])
-    next_state = np.argmax(P[state, action, :])
-    rsum.append(reward[state, action, next_state] + reward2[state, action, next_state])
-    state=next_state
-print(sum(rsum))
+
     

@@ -114,21 +114,3 @@ for run in range(n_runs):
         # if delta < 0.000001:
         #     break
 
-
-# Print the optimal policy
-policy = np.argmax(Q, axis=1)
-#print(policy)
-import pandas as pd
-pd.DataFrame(rewards).to_csv("traditional.csv")
-
-plt.plot(np.mean(rewards,axis=0),color='orange')
-
-state=4
-rsum=[]
-while state not in terminal_states:
-    action=np.argmax(Q[state, :])
-    next_state = np.argmax(P[state, action, :])
-    rsum.append(reward[state, action, next_state]**m + reward2[state, action, next_state]**n)
-    state=next_state
-print(sum(rsum))
-    
