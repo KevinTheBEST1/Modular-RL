@@ -5,8 +5,6 @@ np.random.seed(2)
 from matplotlib import pyplot as plt
 
 def read_mdp(mdp):
-
-    """Function to read MDP file"""
     #mdp="mdp_new.txt"
     f = open(mdp)
 
@@ -51,19 +49,22 @@ def read_mdp(mdp):
 
     return S, A, R, R2, T, gamma,terminal_state
 
-S, A, reward, reward2, P, gamma,terminal_state = read_mdp("mdp_exp.txt")
+S, A, reward, reward2, P, gamma,terminal_state = read_mdp("mdp_exp4.txt")
 alpha = 0.1
+import datetime
 
+# Start measuring the execution time
+start_time = datetime.datetime.now()
 # Define the exploration probability and the number of episodes
 #epsilon = 0.14
 egreedy = 0.7
 egreedy_final = 0
-egreedy_decay = 0.0058
+egreedy_decay = 0.004 #0.0098
 n_episodes = 2000
 
 max_steps=S*A
 # Run Q-learning
-n_runs=3
+n_runs=20
 rewards = np.zeros((n_runs,n_episodes))
 for run in range(n_runs):
     # if(run==3 or run==7):
@@ -102,7 +103,8 @@ for run in range(n_runs):
         rewards[run,episode]=sum(cum_R)
         if egreedy > egreedy_final:
             egreedy -= egreedy*egreedy_decay
-        # Check for convergence
-        delta = np.max(np.abs(Q - np.max(Q)))
-        # if delta < 0.000001:
-        #     break
+        
+end_time = datetime.datetime.now()
+total_time = (end_time - start_time).total_seconds() * 1000
+# Print the total time taken
+print("Total time taken: {:.2f} milliseconds".format(total_time))

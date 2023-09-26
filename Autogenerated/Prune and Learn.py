@@ -3,12 +3,9 @@ import numpy as np
 np.random.seed(2)
 from pulp import *
 from matplotlib import pyplot as plt
-
 os.chdir(os.getcwd())
 
 def read_mdp(mdp):
-
-    """Function to read MDP file"""
     #mdp="mdp_new.txt"
     f = open(mdp)
 
@@ -53,7 +50,7 @@ def read_mdp(mdp):
 
     return S, A, R, R2, T, gamma,terminal_state
 
-S, A, R, R2, T1, gamma,terminal_state = read_mdp("mdp_exp.txt")
+S, A, R, R2, T1, gamma,terminal_state = read_mdp("mdp_exp4.txt")
 
 def find_q(V, T, R, gamma):
 
@@ -95,9 +92,6 @@ def solve_lp(T, R, gamma):
 
 
 def lp(T, R, gamma):
-
-    """Implementation of LP"""
-
     # Initialise policy to all zeros
     policy = [0 for i in range(T.shape[0])]
 
@@ -107,19 +101,14 @@ def lp(T, R, gamma):
 
     # For each state, if action_0 value is less than action_1 value,
     # change its action to action_1
-    '''
-    for s in range(T.shape[0]):
-        if (Q[s][0] < Q[s][1]) and (policy[s] != 1):
-            policy[s] = 1
-    '''
     policy='P'
     return Q, policy
 
-q_p1,pp1 = lp(T1, R, gamma)
-q_m1,pm1 = lp(T1, -R, gamma)
+q_p1,pp1 = lp(T1, abs(R), gamma)
+q_m1,pm1 = lp(T1, abs(-R), gamma)
 
-q_p2,pp2 = lp(T1, R2, gamma)
-q_m2,pm2 = lp(T1, -R2, gamma)
+q_p2,pp2 = lp(T1, abs(R2), gamma)
+q_m2,pm2 = lp(T1, abs(-R2), gamma)
 
 q_p = q_p1 + q_p2
 q_m = -(q_m1 + q_m2)
@@ -131,10 +120,10 @@ q_m = -(q_m1 + q_m2)
 ################################################################################
 ################################################################################
 
-# q_p,pp = lp(T1, R+R2, gamma)
-# q_m,pm = lp(T1, -R-R2, gamma)
+import datetime
 
-
+# Start measuring the execution time
+start_time = datetime.datetime.now()
 
 prob_main = pulp.LpProblem('Main', LpMinimize)
 decision_variables_phi = pulp.LpVariable.dicts('phi', range(S))
@@ -144,21 +133,15 @@ for i in range(S):
         formula += q_p[i,a]-q_m[i,a]-2*decision_variables_phi[i]
         prob_main+= q_p[i,a]-decision_variables_phi[i]>=q_m[i,a]+decision_variables_phi[i]
 prob_main += formula
-#prob += formula>=0
-for i in range(S):
-    prob_main += decision_variables_phi[i]<=1000
-    prob_main += decision_variables_phi[i]>=-1000
+
 prob_main.solve()
 V = np.array([v.varValue for v in prob_main.variables()])
-#print(prob_main)
-#print()
+
 for i in range(S):
     for j in range(A):
         q_p[i,j]= q_p[i,j] - decision_variables_phi[i].varValue
         q_m[i,j]= q_m[i,j] + decision_variables_phi[i].varValue
-# print(q_p)
-# print()
-# print(q_m)
+
 
 info=[]
 final_actions=set(list(range(A)))
@@ -186,7 +169,7 @@ alpha = 0.1
 #epsilon = 0.14
 egreedy = 0.7
 egreedy_final = 0
-egreedy_decay = 0.0058
+egreedy_decay = 0.004 #0.03 #0.0098
 
 n_episodes = 2000
 reward=R
@@ -195,7 +178,7 @@ P=T1
 
 max_steps=S*A
 # Run Q-learning
-n_runs=3
+n_runs=20
 rewards = np.zeros((n_runs,n_episodes))
 for run in range(n_runs):
     egreedy = 0.7
@@ -231,10 +214,9 @@ for run in range(n_runs):
         rewards[run,episode]=sum(cum_R)
         if egreedy > egreedy_final:
             egreedy -= egreedy*egreedy_decay
-        # Check for convergence
-        delta = np.max(np.abs(Q - np.max(Q)))
-        # if delta < 0.000001:
-        #     break
+        
 
-
-    
+end_time = datetime.datetime.now()
+total_time = (end_time - start_time).total_seconds() * 1000
+# Print the total time taken
+print("Total time taken: {:.2f} milliseconds".format(total_time))

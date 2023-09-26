@@ -7,3 +7,5 @@ Learning the target behavior from scratch is  possible but inefficient given the
 * pandas
 * matplotlib
 * numpy
+
+In order to run the code, run python files in each experiment folder.

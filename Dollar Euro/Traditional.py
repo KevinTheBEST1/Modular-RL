@@ -63,7 +63,7 @@ n_episodes = 800
 
 
 # Run Q-learning
-n_runs=5
+n_runs=20
 rewards = np.zeros((n_runs,n_episodes))
 for run in range(n_runs):
     egreedy = 0.7

@@ -115,25 +115,19 @@ def lp(T, R, gamma):
     policy='P'
     return Q, policy
 
-q_p1,pp1 = lp(T1, R, gamma)
-q_m1,pm1 = lp(T1, -R, gamma)
+q_p1,pp1 = lp(T1, abs(R), gamma)
+q_m1,pm1 = lp(T1, abs(-R), gamma)
 
-q_p2,pp2 = lp(T1, R2, gamma)
-q_m2,pm2 = lp(T1, -R2, gamma)
+q_p2,pp2 = lp(T1, abs(R2), gamma)
+q_m2,pm2 = lp(T1, abs(-R2), gamma)
 
 q_p = q_p1 + q_p2
 q_m = -(q_m1 + q_m2)
 
 
-
-
 ################################################################################
 ################################################################################
 ################################################################################
-
-# q_p,pp = lp(T1, R+R2, gamma)
-# q_m,pm = lp(T1, -R-R2, gamma)
-
 
 
 prob_main = pulp.LpProblem('Main', LpMinimize)
@@ -195,7 +189,7 @@ P=T1
 
 
 # Run Q-learning
-n_runs=5
+n_runs=20
 rewards = np.zeros((n_runs,n_episodes))
 for run in range(n_runs):
     egreedy = 0.7
