@@ -291,7 +291,7 @@ def main():
     args = parser.parse_args()
     print(args)
 
-    K = 10
+    K = 20
     if args.n_episodes == 10000:
         K = 10
 

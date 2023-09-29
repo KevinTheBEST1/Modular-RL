@@ -150,7 +150,7 @@ MDP 3
 '''
 max_steps=S*A
 # Run Q-learning
-n_runs=10
+n_runs=20
 rewards = np.zeros((n_runs,n_episodes))
 for run in range(n_runs):
     # if(run==3 or run==7):

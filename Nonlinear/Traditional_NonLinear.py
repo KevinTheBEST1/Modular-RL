@@ -63,7 +63,7 @@ n_episodes = 150000
 
 max_steps=50000
 # Run Q-learning
-n_runs=3
+n_runs=20
 rewards = np.zeros((n_runs,n_episodes))
 for run in range(n_runs):
     # if(run==3 or run==7):

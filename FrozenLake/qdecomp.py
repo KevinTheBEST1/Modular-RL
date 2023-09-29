@@ -53,7 +53,7 @@ learning_rate = 0.9
 egreedy = 0.9
 egreedy_final = 0.1
 egreedy_decay = 0.99
-n_runs=5
+n_runs=20
 r_list=np.zeros((n_runs,num_episodes))
 stepPerEp=[]
 for run in range(n_runs):
