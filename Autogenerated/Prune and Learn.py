@@ -156,7 +156,7 @@ for i in range(S):
         for action_u in range(A):
             if(action_l==action_u):
                 continue
-            if( q_m[i, action_l] > q_p[i,action_u] ):
+            if( q_m[i, action_l] - q_p[i,action_u] >= 0.00000001 ):
                 info.append((i,action_l, action_u))
                 alist.append(action_u)
                 c=c+1
